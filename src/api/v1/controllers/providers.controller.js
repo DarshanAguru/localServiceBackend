@@ -3,19 +3,18 @@ import { addServicesToProviders } from '../repo/services.repo.js';
 import {
   fetchAllProvidersOfService,
   fetchAllProvidersOfServiceFiltered,
+  fetchTopProvidersOfArea,
 } from '../services/providers.service.js';
 
 export const addServices = async (req, res, next) => {
   try {
     const { serviceIds } = req.body;
     const count = await addServicesToProviders(req.user.id, serviceIds);
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Services added',
-        data: { count: count },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Services added',
+      data: { count: count },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -27,6 +26,25 @@ export const addServices = async (req, res, next) => {
   }
 };
 
+export const getTopProvidersOfArea = async (req, res, next) => {
+  try {
+    const userId = req.user?.id;
+    const topProviders = await fetchTopProvidersOfArea(userId);
+    return res.status(200).json({
+      status: true,
+      message: 'providers List fetched',
+      data: topProviders,
+    });
+  } catch (err) {
+    return next(
+      new ErrorResponse(
+        err?.message || 'Internal Server Error',
+        500,
+        'INTERNAL_ERROR',
+      ),
+    );
+  }
+};
 
 export const getAllProvidersOfService = async (req, res, next) => {
   try {
@@ -51,14 +69,18 @@ export const getAllProvidersOfService = async (req, res, next) => {
         : undefined;
 
     let allProviders = [];
-    const hasFilter = (byLocationThres !== undefined);
+    const hasFilter = byLocationThres !== undefined;
 
     if (hasFilter && userId) {
-      allProviders = await fetchAllProvidersOfServiceFiltered(serviceId, userId, {
-        byLocationThres
-      });
+      allProviders = await fetchAllProvidersOfServiceFiltered(
+        serviceId,
+        userId,
+        {
+          byLocationThres,
+        },
+      );
     } else {
-      allProviders = await fetchAllProvidersOfService(serviceId);
+      allProviders = await fetchAllProvidersOfService(serviceId, userId);
     }
 
     return res.status(200).json({
@@ -76,7 +98,6 @@ export const getAllProvidersOfService = async (req, res, next) => {
     );
   }
 };
-
 
 export const getDetailsOfProvider = async (req, res, next) => {
   try {
@@ -96,13 +117,11 @@ export const getDetailsOfProvider = async (req, res, next) => {
         new ErrorResponse('There are no Providers yet!', 404, 'NOT_FOUND'),
       );
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'provider details fetched',
-        data: { ...provider },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'provider details fetched',
+      data: { ...provider },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(

@@ -182,6 +182,57 @@ export const swaggerSpec = swaggerJsdoc({
             },
           },
         },
+        ServiceProvider: {
+          type: 'object',
+          properties: {
+            service_id: {
+              type: 'string',
+              description: 'Service ID',
+            },
+            provider_id: {
+              type: 'string',
+              description: 'Provider ID',
+            },
+            avg_rating: {
+              type: 'string',
+              description: 'Average rating of provider',
+            },
+            review_count: {
+              type: 'string',
+              description: 'No of reviews given to provider',
+            },
+            provider_name: {
+              type: 'string',
+              description: 'Name of provider',
+            },
+            provider_email: {
+              type: 'string',
+              description: 'Email of provider',
+            },
+            provider_phone: {
+              type: 'string',
+              description: 'Phone of provider',
+            },
+            provider_location: {
+              type: 'object',
+              description: 'Location coordinates of Provider',
+              properties: {
+                latitude: {
+                  type: 'string',
+                  description: 'Latitude',
+                },
+                longitude: {
+                  type: 'string',
+                  description: 'Longitude',
+                },
+              },
+            },
+            service_name: {
+              type: 'string',
+              description: 'Name of Service',
+            },
+          },
+        },
         Provider: {
           type: 'object',
           properties: {

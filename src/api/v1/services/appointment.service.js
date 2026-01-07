@@ -18,23 +18,33 @@ export const addNewAppointment = async (data) => {
     );
     const sameServiceAppointments = await findAppointmentOfConsumerWithService(
       data.consumerId,
-      data.serviceId
+      data.serviceId,
     );
 
-    const Approved = sameServiceAppointments.filter((appointment) => appointment.status.toLowerCase() === "approved");
-    const hasAnyApprovedInRange = Approved.filter((appointment) => (Date.now() <=  Date.parse(appointment.preferredDate)) );
+    const Approved = sameServiceAppointments.filter(
+      (appointment) => appointment.status.toLowerCase() === 'approved',
+    );
+    const hasAnyApprovedInRange = Approved.filter(
+      (appointment) => Date.now() <= Date.parse(appointment.preferredDate),
+    );
     if (appointment || hasAnyApprovedInRange.length > 0) {
       console.info('Appointment already present for given service');
-      return {error: "Appointment already Present (approved) for given service", data: null};
+      return {
+        error: 'Appointment already Present (approved) for given service',
+        data: null,
+      };
     }
     const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
     const preferred = new Date(data.preferredDate);
-    const dataToSend = {...data, deadline: new Date(preferred.getTime() + TWO_DAYS_MS)};
+    const dataToSend = {
+      ...data,
+      deadline: new Date(preferred.getTime() + TWO_DAYS_MS),
+    };
     const inserted = await insertAppointment(dataToSend);
-    return {error: null, data: inserted};
+    return { error: null, data: inserted };
   } catch (err) {
     console.log('New Appointment Error', err);
-    return {error: "Error", data: null};
+    return { error: 'Error', data: null };
   }
 };
 
@@ -45,23 +55,18 @@ export const fetchAppointmentsOfConsumer = async (id) => {
       return null;
     }
     const updatedAppointmentList = [];
-    for(let appointment of appointmentsOfConsumer)
-    {
+    for (let appointment of appointmentsOfConsumer) {
       let status = appointment.status.toLowerCase();
-      if (Date.parse(appointment.deadline) <= Date.now())
-      {
-        if(status === "approved")
-        {
-          await updateStatusOfAppointment("cancelled",appointment.id);
-          status = "cancelled";
-        }
-        else if(status === "requested")
-        {
-          await updateStatusOfAppointment("cancelled", appointment.id);
-          status = "cancelled";
+      if (Date.parse(appointment.deadline) <= Date.now()) {
+        if (status === 'approved') {
+          await updateStatusOfAppointment('cancelled', appointment.id);
+          status = 'cancelled';
+        } else if (status === 'requested') {
+          await updateStatusOfAppointment('cancelled', appointment.id);
+          status = 'cancelled';
         }
       }
-      updatedAppointmentList.push({...appointment, status: status});
+      updatedAppointmentList.push({ ...appointment, status: status });
     }
     return updatedAppointmentList;
   } catch (err) {
@@ -77,23 +82,18 @@ export const fetchAppointmentsOfProvider = async (id) => {
       return null;
     }
     const updatedAppointmentList = [];
-    for(let appointment of appointmentsOfProvider)
-    {
+    for (let appointment of appointmentsOfProvider) {
       let status = appointment.status.toLowerCase();
-      if (Date.parse(appointment.deadline) <= Date.now())
-      {
-        if(status === "approved")
-        {
-          await updateStatusOfAppointment("cancelled",appointment.id);
-          status = "cancelled";
-        }
-        else if(status === "requested")
-        {
-          await updateStatusOfAppointment("cancelled", appointment.id);
-          status = "cancelled";
+      if (Date.parse(appointment.deadline) <= Date.now()) {
+        if (status === 'approved') {
+          await updateStatusOfAppointment('cancelled', appointment.id);
+          status = 'cancelled';
+        } else if (status === 'requested') {
+          await updateStatusOfAppointment('cancelled', appointment.id);
+          status = 'cancelled';
         }
       }
-      updatedAppointmentList.push({...appointment, status: status});
+      updatedAppointmentList.push({ ...appointment, status: status });
     }
     return updatedAppointmentList;
   } catch (err) {

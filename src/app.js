@@ -22,7 +22,7 @@ export const createServer = async () => {
   });
   app.use(
     cors({
-      origin: '*',
+      origin: 'http://localhost:4200',
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     }),

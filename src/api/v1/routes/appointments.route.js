@@ -16,7 +16,6 @@ import {
 import { validationMiddleware } from '../../../middlewares/validationMiddleware.js';
 import { appointmentSchema } from '../schemas/appointment.schema.js';
 
-
 const router = Router();
 
 /**

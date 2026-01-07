@@ -130,12 +130,11 @@ export const getAllConsumers = async (req, res, next) => {
 export const register = async (req, res, next) => {
   try {
     const user = await addUser(req.body);
-    if(user.error)
-    {
+    if (user.error) {
       return res.status(209).json({
         status: false,
         message: user.error,
-        data: null
+        data: null,
       });
     }
     return res.status(201).json({

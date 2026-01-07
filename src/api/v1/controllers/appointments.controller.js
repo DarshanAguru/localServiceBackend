@@ -10,23 +10,22 @@ import {
 
 export const addAppointment = async (req, res, next) => {
   try {
-    const appointment = await addNewAppointment({ ...req.body, consumerId: req.user.id});
+    const appointment = await addNewAppointment({
+      ...req.body,
+      consumerId: req.user.id,
+    });
     if (appointment.error) {
-      return res
-        .status(209)
-        .json({
-          status: false,
-          message: appointment.error,
-          data: null,
-        });
-    }
-    return res
-      .status(201)
-      .json({
-        status: true,
-        message: 'Appointment Scheduled',
-        data: { ...appointment.data },
+      return res.status(209).json({
+        status: false,
+        message: appointment.error,
+        data: null,
       });
+    }
+    return res.status(201).json({
+      status: true,
+      message: 'Appointment Scheduled',
+      data: { ...appointment.data },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -57,13 +56,11 @@ export const getAppointmentsOfProvider = async (req, res, next) => {
       );
     }
 
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointment List fetched',
-        data: appointmentsList,
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointment List fetched',
+      data: appointmentsList,
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -94,13 +91,11 @@ export const getAppointmentsOfConsumer = async (req, res, next) => {
       );
     }
 
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointments List fetched',
-        data: appointmentsList,
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointments List fetched',
+      data: appointmentsList,
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -130,13 +125,11 @@ export const getAppointmentData = async (req, res, next) => {
         new ErrorResponse('No appointments found!', 404, 'NOT_FOUND'),
       );
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointment data fetched',
-        data: { ...appointment },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointment data fetched',
+      data: { ...appointment },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -178,13 +171,11 @@ export const updateAppointmentStatus = async (req, res, next) => {
         new ErrorResponse('No Appointments found!', 404, 'NOT_FOUND'),
       );
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointment updated successful',
-        data: { ...updatedAppointment },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointment updated successful',
+      data: { ...updatedAppointment },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -226,13 +217,11 @@ export const updateAppointmentDate = async (req, res, next) => {
         new ErrorResponse('No Appointments found!', 404, 'NOT_FOUND'),
       );
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointment updated',
-        data: { ...updatedAppointment },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointment updated',
+      data: { ...updatedAppointment },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -262,13 +251,11 @@ export const deleteAppointment = async (req, res, next) => {
         new ErrorResponse('No Appointments found!', 404, 'NOT_FOUND'),
       );
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Appointment Deleted',
-        data: { ...deleted },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Appointment Deleted',
+      data: { ...deleted },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(

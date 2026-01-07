@@ -54,7 +54,7 @@ export const addUser = async (data) => {
     const present = await findByUsernameFromAuth(data.email);
     if (present) {
       console.info('User already present');
-      return {error: "User Already Present", data: null};
+      return { error: 'User Already Present', data: null };
     }
     const authData = {
       username: data.email,
@@ -76,15 +76,15 @@ export const addUser = async (data) => {
     return {
       error: null,
       data: {
-      ...user,
-      access_token: undefined,
-      refresh_token: undefined,
-      password: undefined,
-      }
+        ...user,
+        access_token: undefined,
+        refresh_token: undefined,
+        password: undefined,
+      },
     };
   } catch (err) {
     console.log('User Registration Error', err);
-    return {error: "Error", data: null};
+    return { error: 'Error', data: null };
   }
 };
 

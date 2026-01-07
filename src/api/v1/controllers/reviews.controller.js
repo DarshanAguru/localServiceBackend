@@ -9,19 +9,21 @@ import {
 
 export const addReview = async (req, res, next) => {
   try {
-    const review = await addNewReview({ consumerId: req.user.id , ...req.body});
+    const review = await addNewReview({ consumerId: req.user.id, ...req.body });
     if (review.error) {
-      return res
-        .status(209)
-        .json({
-          status: false,
-          message: review.error,
-          data: null,
-        });
+      return res.status(209).json({
+        status: false,
+        message: review.error,
+        data: null,
+      });
     }
     return res
       .status(201)
-      .json({ status: true, message: 'Review Added', data: { ...review.data } });
+      .json({
+        status: true,
+        message: 'Review Added',
+        data: { ...review.data },
+      });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -50,13 +52,11 @@ export const getReviewData = async (req, res, next) => {
     if (!reviewData) {
       return next(new ErrorResponse('No Reviews found!', 404, 'NOT_FOUND'));
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Review data fetched',
-        data: { ...reviewData },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Review data fetched',
+      data: { ...reviewData },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -85,13 +85,11 @@ export const getReviewsOfConsumer = async (req, res, next) => {
       return next(new ErrorResponse('No Reviews found!', 404, 'NOT_FOUND'));
     }
 
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Review List fetched',
-        data: reviewsList,
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Review List fetched',
+      data: reviewsList,
+    });
   } catch (err) {
     return next(
       new ErrorResponse(
@@ -120,13 +118,11 @@ export const getReviewsOfProvider = async (req, res, next) => {
       return next(new ErrorResponse('No Reviews found!', 404, 'NOT_FOUND'));
     }
 
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Review List fetched',
-        data: reviewsList,
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Review List fetched',
+      data: reviewsList,
+    });
   } catch (err) {
     return next(
       new ErrorResponse(

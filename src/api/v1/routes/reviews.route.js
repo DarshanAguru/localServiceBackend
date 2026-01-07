@@ -13,7 +13,6 @@ import {
 import { validationMiddleware } from '../../../middlewares/validationMiddleware.js';
 import { reviewSchema } from '../schemas/review.schema.js';
 
-
 const router = Router();
 
 /**

@@ -28,11 +28,14 @@ export const findAllAppointmentsOfProvider = async (providerId) => {
   return res;
 };
 
-export const findAppointmentOfConsumerWithService = async (consumerId, serviceId) => {
-    const res =
+export const findAppointmentOfConsumerWithService = async (
+  consumerId,
+  serviceId,
+) => {
+  const res =
     await db.sql`SELECT * FROM appointment WHERE consumer_id=${consumerId} AND service_id=${serviceId}`;
   return res;
-}
+};
 
 export const updateStatusOfAppointment = async (status, appointmentId) => {
   const data = {

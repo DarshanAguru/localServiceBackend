@@ -17,29 +17,29 @@ export const addNewReview = async (data) => {
     );
     if (review) {
       console.info('Review already present');
-      return {error: "Review Already Present", data: null};
+      return { error: 'Review Already Present', data: null };
     }
     const appointment = await findAppointmentByIds(
       data.consumerId,
       data.providerId,
-      data.serviceId
+      data.serviceId,
     );
-    if(!appointment)
-    {
-      console.log("No service booked with given provider, hence no review allowed.");
-      return {error: "Review Not allowed", data: null};
+    if (!appointment) {
+      console.log(
+        'No service booked with given provider, hence no review allowed.',
+      );
+      return { error: 'Review Not allowed', data: null };
     }
 
-    if(Date.parse(appointment.deadline) > Date.now())
-    {
-        console.log("Wait till deadline.");
-        return {error: "Wait Till Deadline", data: null};
+    if (Date.parse(appointment.deadline) > Date.now()) {
+      console.log('Wait till deadline.');
+      return { error: 'Wait Till Deadline', data: null };
     }
     const inserted = await insertReview(data);
-    return {error: null, data:inserted};
+    return { error: null, data: inserted };
   } catch (err) {
     console.log('New Review Error', err);
-    return {error: "Error", data: null};
+    return { error: 'Error', data: null };
   }
 };
 

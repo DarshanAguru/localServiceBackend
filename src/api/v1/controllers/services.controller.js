@@ -39,13 +39,11 @@ export const verifyProviderService = async (req, res, next) => {
     }
 
     const verified = await setVerificationStatus(true, providerId, serviceId);
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: 'Verification status updated',
-        data: { status: verified },
-      });
+    return res.status(200).json({
+      status: true,
+      message: 'Verification status updated',
+      data: { status: verified },
+    });
   } catch (err) {
     return next(
       new ErrorResponse(

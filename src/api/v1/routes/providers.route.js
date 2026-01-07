@@ -3,6 +3,7 @@ import {
   getDetailsOfProvider,
   addServices,
   getAllProvidersOfService,
+  getTopProvidersOfArea,
 } from '../controllers/providers.controller.js';
 import {
   jwtAuthMiddleware,
@@ -48,13 +49,42 @@ const router = Router();
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Provider'
+ *                     $ref: '#/components/schemas/ServiceProvider'
  *       400:
  *         description: Validation error
  *       500:
  *         description: Internal server error
  */
 router.get('/s/:serviceId', optionalAuth, getAllProvidersOfService);
+
+/**
+ * @swagger
+ * /api/v1/providers/getTopProvidersOfArea:
+ *   get:
+ *     summary: Get top Provider of Area
+ *     tags: [Providers]
+ *     responses:
+ *       200:
+ *         description: Providers list fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ServiceProvider'
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/getTopProvidersOfArea', optionalAuth, getTopProvidersOfArea);
 
 /**
  * @swagger

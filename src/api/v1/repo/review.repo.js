@@ -27,7 +27,6 @@ export const insertReview = async (reviewData) => {
     };
   }
 
-
   await db.sql`UPDATE map_provider_services SET ${db.sql(updated_rating, ['avg_rating', 'review_count'])} WHERE provider_id=${reviewData.providerId} AND service_id=${reviewData.serviceId}`;
 
   const res =
